@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="utf-8">
     <title>Gestion_Cambalaches.net</title>
     <link rel="stylesheet" href="Estilos.css">
 </head>
-
 <body>
     <section class="composed_head">
         <nav class="header_menu">
@@ -23,48 +21,35 @@
                 Gestionar Producto
             </h1>
             <hr class="top_hr" />
-
         </header>
     </section>
     <div class="leyenda">
         <p class="leyenda">Ingrese aquí la información del Producto que quiera incluir en Cambalache.net</p>
     </div>
-
     <section class="edit_product">
-
-
         <div class="edit">
             <div class="name_product">
                 <input type="text" name="inp_producto" id="producto" placeholder="Nombre del Producto" onkeyup="check_description()"/>
                 <input type="text" name="inp_categoria" id="categoria" placeholder="Categoria" onkeyup="check_description()"/>
                 <select name="slct_cat" id="list_categoria" onchange=""></select>
             </div>
-
             <input class="product_description" type="text" name="inp_descrip" id="descripcion" placeholder="Descripcion" onkeyup="check_description()"/>
-
             <input class="img_file" type="text" name="inp_img_url" id="img_url" placeholder="Archivo de Imagen" onkeyup="check_description()"/>
-
             <input class="search_deal" type="text" name="inp_interest" id="interes" placeholder="Me interesa: ..." onkeyup="check_description()"/>
         </div>
-
         <br />
         <div class="save">
             <hr class="center_hr" />
             <input id="btn_guardar" type ="button" value ="Guardar" onclick= "get_product()" disabled />
             <input id="btn_cancelar" type ="button" value ="Cancelar" onclick= "clear_input()" />
-
         </div>
-
-
     </section>
-
     <footer>
         <nav class="footer_menu">
             <ul>
-
                 <li> <a href="index.html">Inicio</a> </li>
                 <li> <a href="Public.html">Cambalaches</a> </li>
-                <li> <a href="Login.html">Ingresar</a> </li>
+                <li class="linked" onclick="log_out()">Ingresar</li>
             </ul>
         </nav>
         <div class="nombre_logo">
@@ -74,5 +59,4 @@
     </footer>
     <script src="SignIn.js"></script>
 </body>
-
 </html>

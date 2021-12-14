@@ -1,7 +1,8 @@
 let counter = 0;
 let session_id = 0;
 let product_id = 0;
-
+let selected_product = 0;
+/*-------------------------------------------------------------------------*/
 function consecutive() {
     let new_counter = JSON.parse(localStorage.getItem("consecutive"));
     if (!new_counter) {
@@ -13,7 +14,12 @@ function consecutive() {
 /*-------------------------------------------------------------------------*/
 function actual_session() {
     let session = JSON.parse(localStorage.getItem("session_id"));
-        session_id = session;
+    session_id = session;
+}
+/*-------------------------------------------------------------------------*/
+function log_out(){
+    localStorage.setItem("session_id", 0);
+    window.location.href = "Login.html";
 }
 /*-------------------------------------------------------------------------*/
 function last_product() {
@@ -22,33 +28,6 @@ function last_product() {
         product = 0;
     } else {
         product_id = product;
-    }
-}
-/*-------------------------------------------------------------------------*/
-function check_info() {
-    if (document.getElementById("nombre").value.length >= 3 &&
-        document.getElementById("apellido").value.length >= 3 &&
-        document.getElementById("address1").value.length >= 3 &&
-        document.getElementById("ciudad").value.length >= 3 &&
-        document.getElementById("email").value.length >= 3 &&
-        document.getElementById("password").value.length >= 3) {
-        document.getElementById("btn_registrar").disabled = false;
-    } else {
-        document.getElementById("btn_registrar").disabled = true;
-    }
-}
-
-/*-------------------------------------------------------------------------*/
-function check_description() {
-    if (document.getElementById("producto").value.length >= 3 &&
-        document.getElementById("categoria").value.length >= 3 &&
-        document.getElementById("descripcion").value.length >= 3 &&
-        document.getElementById("descripcion").value.length <= 300 &&
-        document.getElementById("interes").value.length >= 3 &&
-        document.getElementById("interes").value.length <= 300) {
-        document.getElementById("btn_guardar").disabled = false;
-    } else {
-        document.getElementById("btn_guardar").disabled = true;
     }
 }
 /*-------------------------------------------------------------------------*/
@@ -75,8 +54,7 @@ function get_user() {
     localStorage.setItem("consecutive", counter);
     alert("Nuevo usuario creado: " +
         new_user.name + " " + new_user.last_name);
-    clear_input();
-    window.location.href = "Login.html"; 
+    window.location.href = "Login.html";
 }
 /*-------------------------------------------------------------------------*/
 function check_user() {
@@ -84,13 +62,12 @@ function check_user() {
     if (registry_db) {
         var user_email = document.getElementById("email").value;
         var user_passwd = document.getElementById("password").value;
-        for (i = 0; i < registry_db.length; i++) {
+        for (var i = 0; i < registry_db.length; i++) {
             if (registry_db[i].email == user_email
                 && registry_db[i].passw == user_passwd) {
                 let user_id = registry_db[i].id;
                 localStorage.setItem("session_id", user_id);
                 window.location.href = "Dashboard.html";
-                clear_login();
                 break;
             }
         }
@@ -98,19 +75,6 @@ function check_user() {
     } else {
         auxiliar_catch();
     }
-}
-/*-------------------------------------------------------------------------*/
-function clear_input() {
-    document.getElementById("btn_registrar").disabled = true;
-    document.getElementById("nombre").value = "";
-    document.getElementById("apellido").value = "";
-    document.getElementById("address1").value = "";
-    document.getElementById("address2").value = "";
-    document.getElementById("lista_pais").value = "";
-    //const js_pais = js_lista_pais.options[js_lista_pais.selectedIndex].text;
-    document.getElementById("ciudad").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("password").value = "";
 }
 /*-------------------------------------------------------------------------*/
 function get_product() {
@@ -127,15 +91,94 @@ function get_product() {
         product: document.getElementById("producto").value,
         category: document.getElementById("categoria").value,
         description: document.getElementById("descripcion").value,
+        img: document.getElementById("img_url").value,
         interest: document.getElementById("interes").value
     }
     inventory_db.push(new_product);
     localStorage.setItem("inventory", JSON.stringify(inventory_db));
     localStorage.setItem("lastest_product", product_id);
     alert("Nuevo producto creado: " +
-    new_product.product + " de tipo " + new_product.category);
+        new_product.product + " de tipo " + new_product.category);
     window.location.href = "Dashboard.html";
-    //clear_input();
+}
+/*-------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------*/
+function check_product() {
+    let stock_db = JSON.parse(localStorage.getItem("inventory"));
+    console.log(stock_db);
+    actual_session();
+    if (stock_db){
+        for (var i = 0; i < stock_db.length; i++) {
+            if (session_id == stock_db[i].user_id) {
+                let div_product = document.createElement("div");
+                let img_product = document.createElement("img");
+                let p_product = document.createElement("p");
+                let div_info = document.createElement("div");
+                let inp_edit = document.createElement("input");
+                let br_line = document.createElement("br");
+                let inp_delete = document.createElement("input");
+                div_product.setAttribute("class", "product");
+                img_product.setAttribute("class", "thumbnail");
+                img_product.setAttribute("onclick", "run_product(" + stock_db[i].id + ")");
+                inp_edit.setAttribute("type", "button");
+                inp_edit.setAttribute("class", "btn_editar");
+                inp_edit.setAttribute("value", "Editar");
+                inp_edit.setAttribute("onclick", "run_edit(" + stock_db[i].id + ")");
+                inp_delete.setAttribute("type", "button");
+                inp_delete.setAttribute("class", "btn_eliminar");
+                inp_delete.setAttribute("value", "Eliminar");
+                inp_delete.setAttribute("onclick", "run_delete(" + stock_db[i].id + ")");
+                p_product.innerHTML = stock_db[i].product;
+                img_product.src = stock_db[i].img;
+                div_product.appendChild(img_product);
+                div_info.appendChild(p_product);
+                div_info.appendChild(inp_edit);
+                div_info.appendChild(br_line);
+                div_info.appendChild(inp_delete);
+                document.getElementById("stock_product").appendChild(div_product);
+                document.getElementById("stock_product").appendChild(div_info); 
+            }
+        }
+    }
+}
+/*-------------------------------------------------------------------------*/
+function check_info() {
+    if (document.getElementById("nombre").value.length >= 3 &&
+        document.getElementById("apellido").value.length >= 3 &&
+        document.getElementById("address1").value.length >= 3 &&
+        document.getElementById("ciudad").value.length >= 3 &&
+        document.getElementById("email").value.length >= 3 &&
+        document.getElementById("password").value.length >= 3) {
+        document.getElementById("btn_registrar").disabled = false;
+    } else {
+        document.getElementById("btn_registrar").disabled = true;
+    }
+}
+/*-------------------------------------------------------------------------*/
+function check_description() {
+    if (document.getElementById("producto").value.length >= 3 &&
+        document.getElementById("categoria").value.length >= 3 &&
+        document.getElementById("descripcion").value.length >= 3 &&
+        document.getElementById("descripcion").value.length <= 300 &&
+        document.getElementById("img_url").value.length >= 3 &&
+        document.getElementById("interes").value.length >= 3 &&
+        document.getElementById("interes").value.length <= 300) {
+        document.getElementById("btn_guardar").disabled = false;
+    } else {
+        document.getElementById("btn_guardar").disabled = true;
+    }
+}
+/*-------------------------------------------------------------------------*/
+function run_product(id){
+    console.log(id);
+}
+/*-------------------------------------------------------------------------*/
+function run_edit(id){
+    console.log(id);
+}
+/*-------------------------------------------------------------------------*/
+function run_delete(id){
+    console.log(id);
 }
 /*-------------------------------------------------------------------------*/
 function auxiliar_catch() {
@@ -145,6 +188,19 @@ function auxiliar_catch() {
 }
 /*-------------------------------------------------------------------------*/
 function clear_login() {
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
+}
+/*-------------------------------------------------------------------------*/
+function clear_input() {
+    document.getElementById("btn_registrar").disabled = true;
+    document.getElementById("nombre").value = "";
+    document.getElementById("apellido").value = "";
+    document.getElementById("address1").value = "";
+    document.getElementById("address2").value = "";
+    document.getElementById("lista_pais").value = "";
+    //const js_pais = js_lista_pais.options[js_lista_pais.selectedIndex].text;
+    document.getElementById("ciudad").value = "";
     document.getElementById("email").value = "";
     document.getElementById("password").value = "";
 }

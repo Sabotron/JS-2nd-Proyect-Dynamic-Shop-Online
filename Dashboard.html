@@ -1,86 +1,45 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="utf-8">
     <title>Dashboard_Cambalaches.net</title>
     <link rel="stylesheet" href="Estilos.css">
 </head>
-
-<body>
+<body onload="check_product()">
     <section class="composed_head">
         <nav class="header_menu">
             <img class="mini_img" src="Felix.png" alt="mini_image">
             <ul class="main_menu">
-
                 <li class="linked"> <a href="index.html">Inicio</a> </li>
                 <li class="linked"> <a href="Product.html">Cambalaches</a> </li>
-                <li class="linked"> <a href="Login.html">Cerrar Sesión</a> </li>
+                <li class="linked" onclick="log_out()"> Cerrar Sesión</li>
                 <li class="carrito">Mi Carrito</li>
             </ul>
-
         </nav>
         <header>
             <h1>
                 Dashboard
             </h1>
             <hr class="top_hr" />
-
         </header>
     </section>
-
     <section class="new_cambalache">
         <p class="leyenda">Bienvenido usuario, aquí podrá encontrar el estado actual de sus Cambalaches y
             productos
             registrados.</p>
-
     </section>
-
     <section class="new_products">
         <div class="new_product">
-            <input id="btn_new" type="button" value="Agregar Producto" onclick= 'window.location.href = "Gestion.html"' />
-           
+            <input id="btn_new" type="button" value="Agregar Producto" onclick= 'window.location.href = "Gestion.html"' />    
         </div>
-        <div class="dashboard_product">
-
-            <div class="product">
-                <img class="thumbnail" src="empty.png" alt="img_product_1">
-                <div>
-                    <p>Product</p>
-                    <button class="btn_editar">Editar</button>
-                    <br />
-                    <button class="btn_eliminar">Eliminar</button>
-                </div>
-            </div>
-            <div class="product">
-                <img class="thumbnail" src="empty.png" alt="img_product_1">
-                <div>
-                    <p>Product</p>
-                    <button class="btn_editar">Editar</button>
-                    <br />
-                    <button class="btn_eliminar">Eliminar</button>
-                </div>
-            </div>
-            <div class="product">
-                <img class="thumbnail" src="empty.png" alt="img_product_1">
-                <div>
-                    <p>Product</p>
-                    <button class="btn_editar">Editar</button>
-                    <br />
-                    <button class="btn_eliminar">Eliminar</button>
-                </div>
-            </div>
-
+        <div class="dashboard_product" id="stock_product">
         </div>
-
     </section>
-
     <footer>
         <nav class="footer_menu">
             <ul>
                 <li class="linked"> <a href="index.html">Inicio</a> </li>
-                <li class="linked"> <a href="Public.html">Cambalaches</a> </li>
-                <li class="linker"> <a href="Login.html">Ingresar</a></li>
+                <li class="linked"> <a href="Public.html">Cambalaches</a> </li> 
             </ul>
         </nav>
         <div class="nombre_logo">
@@ -90,5 +49,4 @@
     </footer>
     <script src="SignIn.js"></script>
 </body>
-
 </html>
