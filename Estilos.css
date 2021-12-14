@@ -476,3 +476,7 @@ footer
 .nombre_logo{
     display: inline;
 }
+/*---------------------------------------------------------*/
+p {
+    font-weight: bold;
+}

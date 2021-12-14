@@ -2,6 +2,7 @@ let counter = 0;
 let session_id = 0;
 let product_id = 0;
 let selected_product = 0;
+let seller_name = "";
 /*-------------------------------------------------------------------------*/
 function consecutive() {
     let new_counter = JSON.parse(localStorage.getItem("consecutive"));
@@ -15,6 +16,24 @@ function consecutive() {
 function actual_session() {
     let session = JSON.parse(localStorage.getItem("session_id"));
     session_id = session;
+}
+/*-------------------------------------------------------------------------*/
+function actual_product() {
+    let selection = JSON.parse(localStorage.getItem("selected"));
+    selected_product = selection;
+    //console.log("selection: " + selected_product);
+}
+/*-------------------------------------------------------------------------*/
+function get_seller(id) {
+    console.log("el Id es: " + id);
+    let registry_db = JSON.parse(localStorage.getItem("registry"));
+    for (var i = 0; i < registry_db.length; i++) {
+        if (id == registry_db[i].id) {
+            seller_name = registry_db[i].name;
+            console.log("nombre del vendedor: " + seller_name);
+        }
+    }
+    /*-------------------------------------------------------------------------*/
 }
 /*-------------------------------------------------------------------------*/
 function log_out() {
@@ -102,10 +121,11 @@ function get_product() {
     window.location.href = "Dashboard.html";
 }
 /*-------------------------------------------------------------------------*/
+
 /*-------------------------------------------------------------------------*/
 function check_product() {
     let stock_db = JSON.parse(localStorage.getItem("inventory"));
-    console.log(stock_db);
+    //console.log(stock_db);
     actual_session();
     if (stock_db) {
         for (var i = 0; i < stock_db.length; i++) {
@@ -155,7 +175,7 @@ function public_products() {
             div_product.setAttribute("class", "product");
             img_product.setAttribute("class", "thumbnail");
             img_product.setAttribute("onclick", "run_product(" + stock_db[i].id + ")");
-            p_product.innerHTML = "Producto: "+ stock_db[i].product;
+            p_product.innerHTML = "Producto: " + stock_db[i].product;
             p_seller.innerHTML = "Vendedor: " + stock_db[i].user_id;
             img_product.src = stock_db[i].img;
             div_info.appendChild(p_product);
@@ -164,13 +184,12 @@ function public_products() {
             div_product.appendChild(img_product);
             div_product.appendChild(div_info);
             document.getElementById("mini_product").appendChild(div_product);
-            //document.getElementById("mini_product").appendChild(div_info);
         }
     }
 }
 /*-------------------------------------------------------------------------*/
 
-
+/*-------------------------------------------------------------------------*/
 
 function check_info() {
     if (document.getElementById("nombre").value.length >= 3 &&
@@ -199,18 +218,40 @@ function check_description() {
     }
 }
 /*-------------------------------------------------------------------------*/
-
-/*-------------------------------------------------------------------------*/
 function run_product(id) {
-    console.log(id);
+    localStorage.setItem("selected", id);
+    window.location.href = "Product.html";
+    //console.log(selected_product);
+}
+/*-------------------------------------------------------------------------*/
+function show_product() {
+    actual_product();
+    //console.log("after function 'show_product': " + selected_product);
+    let stock_db = JSON.parse(localStorage.getItem("inventory"));
+    //console.log("after calling inventory: " + selected_product);
+    if (stock_db) {
+        for (var i = 0; i < stock_db.length; i++) {
+            if (selected_product == stock_db[i].id) {
+                get_seller(stock_db[i].id);
+                let img_product = document.createElement("img");
+                img_product.setAttribute("class", "big_img");
+                img_product.src = stock_db[i].img;
+                document.getElementById("big").appendChild(img_product);
+                document.getElementById("name").innerHTML = stock_db[i].product;
+                document.getElementById("vendedor").innerHTML = "Vendedor: " + seller_name;
+                document.getElementById("descripcion").innerHTML = stock_db[i].description;
+                document.getElementById("interes").innerHTML = stock_db[i].interest;
+            }
+        }
+    }
 }
 /*-------------------------------------------------------------------------*/
 function run_edit(id) {
-    console.log(id);
+  //  console.log(id);
 }
 /*-------------------------------------------------------------------------*/
 function run_delete(id) {
-    console.log(id);
+   // console.log(id);
 }
 /*-------------------------------------------------------------------------*/
 function auxiliar_catch() {

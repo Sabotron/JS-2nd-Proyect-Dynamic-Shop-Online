@@ -5,7 +5,7 @@
     <title>Product_Cambalaches.net</title>
     <link rel="stylesheet" href="Estilos.css">
 </head>
-<body>
+<body onload="show_product()">
 <section class="composed_head">
     <nav class="header_menu">
         <img class="mini_img" src="Felix.png" alt="mini_image">
@@ -17,17 +17,17 @@
         </ul>
     </nav> 
 </section>
-<section class="main_image">
-    <img class="big_img" src="empty.png" alt="product_image">
+<section class="main_image" id="big">
+
     <section class="detail">
         <div>
-            <p class="big_name">Nombre del Producto</p>
+            <p class="big_name" id="name"></p>
             <hr class="product_hr" />
-            <p>Ofrecido por: <a href="">Vendedor</a></p>
+            <p id="vendedor">Ofrecido por: <a href=""></a></p>
             <h4>Descripcion</h4>
-            <p>Descripcion del producto</p>
+            <p id="descripcion"></p>
             <h4>Busco</h4>
-            <p>Detalles de los productos de interés</p>
+            <p id ="interes"></p>
             <hr class="product_hr" />
             <button>Agregar</button>
         </div>
@@ -46,5 +46,6 @@
             <p>Cambalaches.net</p>
         </div>
     </footer>
+    <script src="SignIn.js"></script>
 </body>
 </html>
