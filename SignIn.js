@@ -98,33 +98,66 @@ function check_user() {
 /*-------------------------------------------------------------------------*/
 function get_product() {
     last_product();
-    product_id = product_id + 1;
-    let inventory_db = JSON.parse(localStorage.getItem("inventory"));
-    if (!inventory_db) {
-        inventory_db = [];
+   log();
+    if (selected_product == 0) {
+        product_id = product_id + 1;
+        let inventory_db = JSON.parse(localStorage.getItem("inventory"));
+        if (!inventory_db) {
+            inventory_db = [];
+        }
+        actual_session();
+        const new_product = {
+            id: product_id,
+            user_id: session_id,
+            product: document.getElementById("producto").value,
+            category: document.getElementById("categoria").value,
+            description: document.getElementById("descripcion").value,
+            img: document.getElementById("img_url").value,
+            interest: document.getElementById("interes").value
+        }
+        inventory_db.push(new_product);
+        localStorage.setItem("inventory", JSON.stringify(inventory_db));
+        localStorage.setItem("lastest_product", product_id);
+        alert("Nuevo producto creado: " +
+            new_product.product + " de tipo " + new_product.category);
+        window.location.href = "Dashboard.html";
+        //log();
+    } else {
+
+        product_id = selected_product;
+        log();
+        let inventory_db = JSON.parse(localStorage.getItem("inventory"))
+        log();
+        for (i = 0; i < inventory_db.length; i++) {
+            if (inventory_db[i].id == product_id) {
+                inventory_db[i].product = document.getElementById("producto").value;
+                inventory_db[i].category = document.getElementById("categoria").value;
+                inventory_db[i].description = document.getElementById("descripcion").value;
+                inventory_db[i].img = document.getElementById("img_url").value;
+                inventory_db[i].interest = document.getElementById("interes").value;
+                break;
+            }
+        }
+        localStorage.setItem("inventory", JSON.stringify(inventory_db));
+        alert("Se ha editado el producto!");
+        window.location.href = "Dashboard.html";
+       //log();
     }
-    actual_session();
-    const new_product = {
-        id: product_id,
-        user_id: session_id,
-        product: document.getElementById("producto").value,
-        category: document.getElementById("categoria").value,
-        description: document.getElementById("descripcion").value,
-        img: document.getElementById("img_url").value,
-        interest: document.getElementById("interes").value
-    }
-    inventory_db.push(new_product);
-    localStorage.setItem("inventory", JSON.stringify(inventory_db));
-    localStorage.setItem("lastest_product", product_id);
-    alert("Nuevo producto creado: " +
-        new_product.product + " de tipo " + new_product.category);
-    window.location.href = "Dashboard.html";
 }
 /*-------------------------------------------------------------------------*/
-
+function log()
+{
+    console.log(
+        "sesion = " + session_id + 
+        " product_id = " + product_id + 
+        " selected_product = " +  selected_product + 
+        " seller_name= " + seller_name 
+     )
+}
 /*-------------------------------------------------------------------------*/
 function check_product() {
     let stock_db = JSON.parse(localStorage.getItem("inventory"));
+    localStorage.setItem("selected", 0);
     //console.log(stock_db);
     actual_session();
     if (stock_db) {
@@ -206,6 +239,7 @@ function check_info() {
 /*-------------------------------------------------------------------------*/
 function check_description() {
     if (document.getElementById("producto").value.length >= 3 &&
+        document.getElementById("producto").value.length <= 200 &&
         document.getElementById("categoria").value.length >= 3 &&
         document.getElementById("descripcion").value.length >= 3 &&
         document.getElementById("descripcion").value.length <= 300 &&
@@ -221,7 +255,11 @@ function check_description() {
 function run_product(id) {
     localStorage.setItem("selected", id);
     window.location.href = "Product.html";
-    //console.log(selected_product);
+}
+/*-------------------------------------------------------------------------*/
+function run_edit(id) {
+    localStorage.setItem("selected", id);
+    window.location.href = "Gestion.html";
 }
 /*-------------------------------------------------------------------------*/
 function show_product() {
@@ -245,13 +283,35 @@ function show_product() {
         }
     }
 }
+
 /*-------------------------------------------------------------------------*/
-function run_edit(id) {
-  //  console.log(id);
+
+function edit(id) {
+
+    actual_product();
+    console.log(selected_product);
+    if (selected_product > 0) {
+        let stock_db = JSON.parse(localStorage.getItem("inventory"));
+        if (stock_db) {
+            for (var i = 0; i < stock_db.length; i++) {
+                if (stock_db[i].id == selected_product) {
+                    document.getElementById("producto").value = stock_db[i].product;
+                    document.getElementById("categoria").value = stock_db[i].category;
+                    document.getElementById("descripcion").value = stock_db[i].description;
+                    document.getElementById("img_url").value = stock_db[i].img;
+                    document.getElementById("interes").value = stock_db[i].interest;
+                }
+            }
+        }
+    }
 }
+
+/*-------------------------------------------------------------------------*/
+
+
+
 /*-------------------------------------------------------------------------*/
 function run_delete(id) {
-   // console.log(id);
 }
 /*-------------------------------------------------------------------------*/
 function auxiliar_catch() {

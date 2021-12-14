@@ -432,10 +432,12 @@ div
 /*---------------------------------------------------------*/
 .big_img
 {  
+    display: flex;
+    flex-wrap: wrap;
     padding: 10px;
     width: 360px;
     height: auto;
-    border-radius: 10%;
+    border-radius: 5%;
     margin-right: 5px;
 }
 /*---------------------------------------------------------*/
