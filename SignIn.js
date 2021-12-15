@@ -25,7 +25,7 @@ function actual_product() {
 }
 /*-------------------------------------------------------------------------*/
 function get_seller(id) {
-    console.log("el Id es: " + id);
+    //console.log("el Id es: " + id);
     let registry_db = JSON.parse(localStorage.getItem("registry"));
     for (var i = 0; i < registry_db.length; i++) {
         if (id == registry_db[i].id) {
@@ -33,9 +33,19 @@ function get_seller(id) {
             console.log("nombre del vendedor: " + seller_name);
         }
     }
-    /*-------------------------------------------------------------------------*/
 }
 /*-------------------------------------------------------------------------*/
+function name_seller(id) {
+    //console.log("el Id es: " + id);
+    let registry_db = JSON.parse(localStorage.getItem("registry"));
+    for (var i = 0; i < registry_db.length; i++) {
+        if (id == registry_db[i].id) {
+            return registry_db[i].name + " " + registry_db[i].last_name;
+        }
+    }
+}
+/*-------------------------------------------------------------------------*/
+
 function log_out() {
     localStorage.setItem("session_id", 0);
     window.location.replace("Login.html");
@@ -98,7 +108,7 @@ function check_user() {
 /*-------------------------------------------------------------------------*/
 function get_product() {
     last_product();
-   log();
+    log();
     if (selected_product == 0) {
         product_id = product_id + 1;
         let inventory_db = JSON.parse(localStorage.getItem("inventory"));
@@ -141,18 +151,17 @@ function get_product() {
         localStorage.setItem("inventory", JSON.stringify(inventory_db));
         alert("Se ha editado el producto!");
         window.location.href = "Dashboard.html";
-       //log();
+        //log();
     }
 }
 /*-------------------------------------------------------------------------*/
-function log()
-{
+function log() {
     console.log(
-        "sesion = " + session_id + 
-        " product_id = " + product_id + 
-        " selected_product = " +  selected_product + 
-        " seller_name= " + seller_name 
-     )
+        "sesion = " + session_id +
+        " product_id = " + product_id +
+        " selected_product = " + selected_product +
+        " seller_name= " + seller_name
+    )
 }
 /*-------------------------------------------------------------------------*/
 function check_product() {
@@ -160,6 +169,7 @@ function check_product() {
     localStorage.setItem("selected", 0);
     //console.log(stock_db);
     actual_session();
+
     if (stock_db) {
         for (var i = 0; i < stock_db.length; i++) {
             if (session_id == stock_db[i].user_id) {
@@ -209,7 +219,8 @@ function public_products() {
             img_product.setAttribute("class", "thumbnail");
             img_product.setAttribute("onclick", "run_product(" + stock_db[i].id + ")");
             p_product.innerHTML = "Producto: " + stock_db[i].product;
-            p_seller.innerHTML = "Vendedor: " + stock_db[i].user_id;
+            p_seller.innerHTML = "Vendedor: " + name_seller(stock_db[i].user_id);
+            //p_seller.innerHTML = "Vendedor: " + stock_db[i].user_id;
             img_product.src = stock_db[i].img;
             div_info.appendChild(p_product);
             div_info.appendChild(br_line);
@@ -221,9 +232,6 @@ function public_products() {
     }
 }
 /*-------------------------------------------------------------------------*/
-
-/*-------------------------------------------------------------------------*/
-
 function check_info() {
     if (document.getElementById("nombre").value.length >= 3 &&
         document.getElementById("apellido").value.length >= 3 &&
@@ -276,19 +284,18 @@ function show_product() {
                 img_product.src = stock_db[i].img;
                 document.getElementById("big").appendChild(img_product);
                 document.getElementById("name").innerHTML = stock_db[i].product;
-                document.getElementById("vendedor").innerHTML = "Vendedor: " + seller_name;
+                document.getElementById("vendedor").innerHTML = "Vendedor: " + name_seller(stock_db[i].user_id);
+                //document.getElementById("vendedor").innerHTML = "Vendedor: " + seller_name;
                 document.getElementById("descripcion").innerHTML = stock_db[i].description;
                 document.getElementById("interes").innerHTML = stock_db[i].interest;
             }
         }
     }
 }
-
 /*-------------------------------------------------------------------------*/
-
 function edit(id) {
-
     actual_product();
+    get_category();
     console.log(selected_product);
     if (selected_product > 0) {
         let stock_db = JSON.parse(localStorage.getItem("inventory"));
@@ -305,13 +312,99 @@ function edit(id) {
         }
     }
 }
-
 /*-------------------------------------------------------------------------*/
 
+function get_category() {
+    const select = document.getElementById("list_categoria");
+    select.innerHTML = "";
+    const types = JSON.parse(localStorage.getItem("inventory"));
+    if (types) {
+        for (var i = 0; i < types.length; i++) {
+            var option = document.createElement("option");
+            option.textContent = types[i].category;
+            select.appendChild(option);
+        }
+    }
+}
+/*-------------------------------------------------------------------------*/
+function set_category() {
+    var select = document.getElementById("list_categoria");
+    var category = select.options[select.selectedIndex].text;
+    var inp_category = document.getElementById("categoria");
+    inp_category.value = category;
+}
+/*-------------------------------------------------------------------------*/
+function search() {
+    document.getElementById("result_cat").innerHTML = "";
+    var select = document.getElementById("list_categoria");
+    var find_cat = select.options[select.selectedIndex].text;
+    let stock_db = JSON.parse(localStorage.getItem("inventory"));
+    if (stock_db) {
+        for (var i = 0; i < stock_db.length; i++) {
+            if (stock_db[i].category == find_cat) {
+                let div_product = document.createElement("div");
+                let img_product = document.createElement("img");
+                let br_line = document.createElement("br");
+                let p_category = document.createElement("p");
 
+                div_product.setAttribute("class", "cat");
+                img_product.setAttribute("class", "thumbnail");
+                img_product.setAttribute("onclick", "run_product(" + stock_db[i].id + ")");
+                p_category.innerHTML = "Categoría: " + stock_db[i].category;
+                img_product.src = stock_db[i].img;
+                div_product.appendChild(img_product);
+                div_product.appendChild(br_line);
+                div_product.appendChild(p_category);
+                document.getElementById("result_cat").appendChild(div_product);
+            }
+
+        }
+    }
+}
+/*-------------------------------------------------------------------------*/
+function last_two_products() {
+
+    let stock_db = JSON.parse(localStorage.getItem("inventory"));
+    if (stock_db) {
+        for (var i = (stock_db.length-1); i > (stock_db.length-3); i--) {
+            let div_product = document.createElement("div");
+            let img_product = document.createElement("img");
+            let br_line = document.createElement("br");
+            let p_product = document.createElement("p");
+            div_product.setAttribute("class", "cat");
+            img_product.setAttribute("class", "medium_img");
+            img_product.setAttribute("alt", "reciente");
+            console.log(i);
+            img_product.setAttribute("onclick", "run_product(" + stock_db[i].id + ")");
+            p_product.innerHTML = "Producto: " + stock_db[i].product;
+            img_product.src = stock_db[i].img;
+            div_product.appendChild(img_product);
+            div_product.appendChild(br_line);
+            div_product.appendChild(p_product);
+            document.getElementById("recent_two").appendChild(div_product);
+        }
+    }
+}
 
 /*-------------------------------------------------------------------------*/
+function run_index() {
+    get_category();
+    last_two_products();
+}
+/*-------------------------------------------------------------------------*/
+
 function run_delete(id) {
+
+    let stock_db = JSON.parse(localStorage.getItem("inventory"));
+    let inventory_mod = [];
+    for (i = 0; i < stock_db.length; i++) {
+        if (stock_db[i].id != id) {
+            inventory_mod.push(stock_db[i]);
+        }
+    }
+    localStorage.setItem("inventory", JSON.stringify(inventory_mod));
+    alert("Se ha eliminado el producto");
+    window.location.replace("Dashboard.html");
 }
 /*-------------------------------------------------------------------------*/
 function auxiliar_catch() {
@@ -322,6 +415,10 @@ function auxiliar_catch() {
 function clear_login() {
     document.getElementById("email").value = "";
     document.getElementById("password").value = "";
+}
+/*-------------------------------------------------------------------------*/
+function cancel() {
+    window.location.href = "Dashboard.html";
 }
 /*-------------------------------------------------------------------------*/
 function clear_input() {

@@ -5,7 +5,7 @@
     <title>Cambalaches.net</title>
     <link rel="stylesheet" href="Estilos.css">
 </head>
-<body>
+<body onload="run_index()">
     <section class=composed_head>
         <nav class="header_menu">
             <img class="mini_img" src="Felix.png" alt="mini_image">
@@ -21,40 +21,22 @@
             </h1>
             <hr class="top_hr" />
             <div class="search">
-                <input type="text" name="" id="">
-                <button class="btn_search">Buscar</button>
+                <select name="slct_cat" id="list_categoria" ></select> 
+                <input type="button" class="btn_search" value="Buscar" id="btn_search" onclick="search()"></input>
             </div>
         </header>
     </section>
     <section class="category">
         <h2>Categorias</h2>
         <p>Todos los productos clasificados por categorías</p>
-        <div class="list_category">
-            <div class="cat">
-                <img class="thumbnail" src="empty.png" alt="img_category_1">
-                <p>Category_1</p>
-            </div>
-            <div class="cat">
-                <img class="thumbnail" src="empty.png" alt="img_category_2">
-                <p>Category_2</p>
-            </div>
-            <div class="cat">
-                <img class="thumbnail" src="empty.png" alt="img_category_3">
-                <p>Category_3</p>
-            </div>
+        <div class="list_category" id="result_cat">
+           
         </div>
     </section>
     <section class="most_wanted">
         <h2>Cambalaches Recientes</h2>
-        <div class= "wanted">
-            <div>
-                <img class="medium_img" src="empty.png" alt="img_reciente_1">
-                <p>Reciente_1</p>
-            </div>
-            <div>
-                <img class="medium_img" src="empty.png" alt="img_reciente_2">
-                <p>Reciente_2</p>
-            </div>
+        <div class= "wanted" id="recent_two">
+           
         </div>
     </section>
     <footer>
@@ -62,14 +44,15 @@
             <ul>
                 <li class="linked">Acerca</li>
                 <li> <a href="Public.html">Tienda</a> </li>
-                <li class="linked">Ayuda</li>
+         
             </ul>
         </nav>
         <div class="nombre_logo">
             <img class="mini_img" src="Felix.png" alt="mini_image">
             <p>Cambalaches.net</p>
         </div>
-<script src="SignIn.js"></script>
+
     </footer>
+    <script src="SignIn.js"></script>
 </body>
 </html>
