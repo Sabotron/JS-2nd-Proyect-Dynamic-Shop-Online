@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="Estilos.css">
 </head>
 <body onload="edit()">
-    <section class="composed_head">
+    <div class="composed_head">
         <nav class="header_menu">
             <img class="mini_img" src="Felix.png" alt="mini_image">
             <ul class="main_menu">
@@ -22,11 +22,11 @@
             </h1>
             <hr class="top_hr" />
         </header>
-    </section>
+    </div>
     <div class="leyenda">
         <p class="leyenda">Ingrese aquí la información del Producto que quiera incluir en Cambalache.net</p>
     </div>
-    <section class="edit_product">
+    <div class="edit_product">
         <div class="edit">
             <div class="name_product">
                 <input type="text" name="inp_producto" id="producto" placeholder="Nombre del Producto" onkeyup="check_description()"/>
@@ -43,7 +43,7 @@
             <input id="btn_guardar" type ="button" value ="Guardar" onclick= "get_product()" disabled />
             <input id="btn_cancelar" type ="button" value ="Cancelar" onclick= "cancel()" />
         </div>
-    </section>
+    </div>
     <footer>
         <nav class="footer_menu">
             <ul>
