@@ -1,7 +1,14 @@
+:root{
+    --header_background: lightblue;
+    --blanco_universal: white;
+    --gris_pasivo:rgba(233, 233, 233, 0.781);
+}
+
+
 body
 {
     margin:0px;
-    background-color: rgba(233, 233, 233, 0.781);
+    background-color: var(--gris_pasivo);;
     font-size: 12px;
     color: #606060;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -13,7 +20,7 @@ body
 /*---------------------------------------------------------*/
 .composed_head
 {
-    background-color: lightblue;
+    background-color: var(--header_background);
     padding-bottom: 15px;
     margin-bottom: 3px;
 }
@@ -39,7 +46,7 @@ h2
 hr.top_hr
 {
     position: relative;
-    border-color:rgba(233, 233, 233, 0.781);
+    border-color: var(--gris_pasivo);
     width: 20%;
 }
 /*---------------------------------------------------------*/
@@ -47,7 +54,7 @@ hr.center_hr
 {
     margin-top: 15px;
     position: relative;
-    border-color:rgba(233, 233, 233, 0.781);
+    border-color:var(--gris_pasivo);;
     width: 50%;
 }
 /*---------------------------------------------------------*/
@@ -55,7 +62,7 @@ hr.product_hr
 {
     margin-top: 15px;
     position: relative;
-    border-color:rgba(233, 233, 233, 0.781);
+    border-color:var(--gris_pasivo);;
     width: 90%;
 }
 /*---------------------------------------------------------*/
@@ -80,7 +87,7 @@ div.search
 
 .leyenda
 {
-    background-color: white;
+    background-color: var(--blanco_universal);
     display: flex;
     justify-content: center;
     text-align: center;
@@ -93,7 +100,7 @@ div.search
 {
     padding:10px;
     padding-top: 30px;
-    background-color: white;
+    background-color: var(--blanco_universal);
     text-align: center;
     margin-bottom: 0px;
 }
@@ -101,7 +108,7 @@ div.search
 .login input
 {
     margin: 10px;
-    background-color: white;
+    background-color: var(--blanco_universal);
 }
 /*---------------------------------------------------------*/
 
@@ -109,7 +116,7 @@ div.search
 {
     padding:10px;
     padding-top: 30px;
-    background-color: white;
+    background-color: var(--blanco_universal);
     text-align: center;
     margin-bottom: 0px;
 }
@@ -117,18 +124,18 @@ div.search
 .user_info input
 {
     margin: 10px;
-    background-color: white;
+    background-color: var(--blanco_universal);
 }
 /*---------------------------------------------------------*/
 .edit_product
 {
-    background-color: white;
+    background-color: var(--blanco_universal);
 
 }
 /*---------------------------------------------------------*/
 .edit
 {
-    background-color: white;
+    background-color: var(--blanco_universal);
     padding-top: 30px;
     display: flex;
     align-items: center;
@@ -151,8 +158,9 @@ div.search
     width: 420px;
     height: 60px;
     text-align: left;
+
 }
-    
+
 /*---------------------------------------------------------*/
 .img_file
 {
@@ -160,20 +168,24 @@ div.search
     width: 420px;
     text-align: left;
 }
-    
+img, .big_img
+{    
+    width: 400%;
+    height: auto;
+}
 /*---------------------------------------------------------*/
 
 .long_input input
 {
     width: 384px;
-    background-color: white;
+    background-color: var(--blanco_universal);
 }
 /*---------------------------------------------------------*/
 .btn_search
 {
 
     background-color: rgb(49, 49, 49);
-    color: white;
+    color: var(--blanco_universal);
 }
 /*---------------------------------------------------------*/
 
@@ -213,13 +225,13 @@ div.search
 /*---------------------------------------------------------*/
 .btn_new a
 {
-    color: white;
+    color: var(--blanco_universal);
 }
 /*---------------------------------------------------------*/
 .register
 {
     margin-top: 0px;
-    background-color: white;
+    background-color: var(--blanco_universal);
     justify-content: center;
     text-align: center;
     padding-bottom: 30px;
@@ -234,7 +246,7 @@ div.search
 /*---------------------------------------------------------*/
 .register button a
 {
-    color: white;
+    color: var(--blanco_universal);
 }
 /*---------------------------------------------------------*/
 
@@ -260,7 +272,7 @@ div.search
 /*---------------------------------------------------------*/
 .save button a
 {
-    color: white;
+    color: var(--blanco_universal);
 }
 /*---------------------------------------------------------*/
 .btn_guardar
@@ -273,7 +285,7 @@ div.search
 {
     display: flex;
     justify-content: space-between;
-    background-color: lightblue;
+    background-color: var(--header_background);
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -288,7 +300,7 @@ ul.main_menu
 .carrito
 {
     display: inline;
-    color: white;
+    color: var(--blanco_universal);
     background-color: rgb(49, 49, 49);
     margin-right: 15px;
 }
@@ -316,15 +328,21 @@ ul.main_menu
     padding-bottom: 10px;
 }
 /*---------------------------------------------------------*/
-.wanted{
+/*
+   Index - Dos últimos
+*/
+.wanted
+{
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
 }
 /*---------------------------------------------------------*/
 .product 
 {
-    width:450px;
+    width:420px;
     display: flex;
     padding: 10px;
     justify-content: center;
@@ -351,7 +369,7 @@ ul.main_menu
 .list_product
 {
     margin-top: 3px;
-    background-color: white;
+    background-color: var(--blanco_universal);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -360,7 +378,7 @@ ul.main_menu
 .dashboard_product
 {
     margin-top: 3px;
-    background-color: white;
+    background-color: var(--blanco_universal);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -368,7 +386,7 @@ ul.main_menu
 /*---------------------------------------------------------*/
 .new_products .new_product
 {
-    background-color: white;
+    background-color: var(--blanco_universal);
     padding: 5px;
 }
 /*---------------------------------------------------------*/
@@ -377,7 +395,7 @@ ul.main_menu
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    background-color: white;
+    background-color: var(--blanco_universal);
     padding: 20px;
 
 }
@@ -399,16 +417,12 @@ li
 /*---------------------------------------------------------*/
 div 
 {
-
     padding: 10px;
-    border-style: solid;
-    border-color: aqua;
-    border-width: 2px;
 }
 /*---------------------------------------------------------*/
 .thumbnail
 {
-    width: 150px;
+    width: 170px;
     height: auto;
     border-radius: 4%;
 }
@@ -434,7 +448,8 @@ div
     display: flex;
     flex-wrap: wrap;
     padding: 10px;
-    width: 360px;
+    width: 75%;
+    height: 75%;
     height: auto;
     border-radius: 5%;
     margin-right: 5px;
@@ -450,14 +465,14 @@ div
 {
     text-align: center;
     padding: 10px;
-    background-color: #fff;
+    background-color: var(--blanco_universal);
 }
 /*---------------------------------------------------------*/
 footer
 {
     margin-top: 3px;
     text-align: center;
-    background-color: #fff;
+    background-color: var(--blanco_universal);
     padding-top: 10px;
     padding-bottom: 10px;
 }
@@ -480,4 +495,13 @@ footer
 /*---------------------------------------------------------*/
 p {
     font-weight: bold;
+    margin: 0px;
+
+}
+
+br
+{
+
+    padding: 0;
+    border: 0;
 }
